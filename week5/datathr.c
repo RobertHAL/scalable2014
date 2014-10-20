@@ -1,13 +1,17 @@
 /* C program that 
 - fills and array with data 
-- computes the average
-- the computes the variance
+- computes the average using parallel threads
+- then computes the variance
  
 */
 
 // include statement - standard input / output libraries and Standard Libraries (for rand())
+// 		     - pthread.h provides the thread functions
 #include <stdio.h>
 #include <stdlib.h>
+#include <pthread.h>
+
+#define NUM_THREADS     2
 
 
 // function prototypes
@@ -24,6 +28,8 @@ int main (int argc, char** argv) {
 	// array of 10^6 integers - compile time array
 	double calcAverage;
 	double calcVarience;
+
+	pthread_t aveThreads[NUM_THREADS];
 	int data[1000000];
 	for (int i = 0; i < 1000000; i++){
 		data[i] = rand()%100;
@@ -45,20 +51,25 @@ int main (int argc, char** argv) {
  */
 double calcAve(int darray[], long unsigned int arrSize){
 	
-	double valSum = 0;
-	
-	
+	double valSum = 0;	
 	
 	// A for() loop that sums the elements in the array
-	
+	// The function of this loop parallelised by running it in n seperate
+	// threads where n is the number of available core. 
+	// Each thread would be assigned arrSize/n element to process.
+	// Each thread would determine the boundaries based on the thread number
+	// and the overall array size.
+	// Each thread will return the average of the elements it processed.
+	 
 	for(int i = 0; i < arrSize; i++){
 		valSum = valSum + darray[i];
 	}
-	printf("%f \n", valSum);
-	printf("%lu \n", arrSize);
+	
 	// end of function statement 
-	printf("The end of the function return the average as an int\n");
 	return(valSum/arrSize);
+	// The returned thread averages are summed by the master thread
+	// and divided by the number of processor  
+
 }
 
 
