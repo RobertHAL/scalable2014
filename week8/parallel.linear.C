@@ -24,10 +24,17 @@ void* linearSearch(void *threadid)
    * compute the thread workload size
    */
 
+  int threadStart = tid * (search_size/num_threads);
+  int threadStop = (tid * (search_size/num_threads)) + ((search_size/num_threads) - 1);
+
    /*
     * iterate over the thread workload looking for the 
     * key
     */
+
+  for (int t = threadStart; t = threadStop; t++){
+	
+  }
 
    /*
     * when the key is found the thread can exit
