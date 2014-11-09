@@ -33,7 +33,10 @@ void* linearSearch(void *threadid)
     */
 
   for (int t = threadStart; t = threadStop; t++){
-	
+	if((search_array[t] == search_key){
+		printf("Key found at position %d\n", t);
+		t =  threadStop;
+	}
   }
 
    /*
