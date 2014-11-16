@@ -10,7 +10,7 @@
 int search_key = 0;
 int num_threads = 1;
 int* search_array;
-
+bool key_found = false;
 int search_size;
 
 void* linearSearch(void *threadid);
@@ -26,15 +26,24 @@ void* linearSearch(void *threadid)
 
   int threadStart = tid * (search_size/num_threads);
   int threadStop = (tid * (search_size/num_threads)) + ((search_size/num_threads) - 1);
+	
+  printf("Lower Processing Boundary %d\n",threadStart);
+  printf("Upper Porcessing Boundary %d\n\n",threadStop);
 
    /*
     * iterate over the thread workload looking for the 
     * key
     */
 
-  for (int t = threadStart; t = threadStop; t++){
-	if((search_array[t] == search_key){
-		printf("Key found at position %d\n", t);
+  for (int t = threadStart; t <= threadStop; t++){
+	printf("%d\n",search_array[t]);
+	if(key_found==false){	
+		if(search_array[t] == search_key){
+			printf("Key found at position %d\n", t);
+			key_found=true;
+			t =  threadStop;
+		}
+	} else {
 		t =  threadStop;
 	}
   }
